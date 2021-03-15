@@ -6,14 +6,19 @@ import {
 } from 'amazon-cognito-identity-js'
 import poolData from '../cognito-pool-data'
 
+
 const userPool = new CognitoUserPool(poolData)
 
 export const createUser = (username, email, password, callback) => {
   const attributeList = [
     new CognitoUserAttribute({
       Name: 'email',
-      Value: email,
+      Value: email
     }),
+    new CognitoUserAttribute({
+      Name: 'name',
+      Value: username
+    })
   ]
 
   // Username must be unique in a pool, and cant be a valid email format
@@ -79,4 +84,52 @@ export const getCurrentUser = (callback) => {
       callback(attributes)
     })
   })
+}
+
+export function resetPassword(username){
+console.log("------------------")
+console.log(username)
+  const userData = {
+    Username: username,
+    Pool: userPool
+  }
+
+  const cognitoUser = new CognitoUser(userData)
+
+
+
+  cognitoUser.forgotPassword({
+    onSuccess: function(result) {
+        console.log('call result: ' + result);
+    },
+    onFailure: function(err) {
+        alert(err);
+    },
+    inputVerificationCode() {}
+  });
+}
+
+
+
+export function changePassword(username, verificationCode){
+  console.log("*******", verificationCode)
+
+  const userData = {
+    Username: username,
+    Pool: userPool
+  }
+  
+
+  const cognitoUser = new CognitoUser(userData)
+
+  cognitoUser.confirmPassword(verificationCode, "12345678qw", {
+    onSuccess: function(result) {
+      console.log('call result: ' + result);
+    },
+    onFailure: function(err) {
+      alert(err);
+    },
+});        
+  
+
 }

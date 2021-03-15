@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import Signup from './Signup'
 import Signin from './Signin'
 import UserStatus from './UserStatus'
+import Forgotpassword from './Forgotpassword'
 import './App.css';
 
 class App extends Component {
@@ -19,6 +20,8 @@ class App extends Component {
         <Signup />
         <hr />
         <Signin />
+        <hr/>
+        <Forgotpassword/>
         <UserStatus />
       </div>
     );
