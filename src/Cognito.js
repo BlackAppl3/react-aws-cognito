@@ -130,6 +130,28 @@ export function changePassword(username, verificationCode){
       alert(err);
     },
 });        
-  
+}
 
+
+export function deleteUser(){
+  const cognitoUser = userPool.getCurrentUser()
+  if (!cognitoUser) return false;
+
+
+  cognitoUser.getSession((err, session) => {
+    if (err) {
+      console.log(err)
+      return
+    }
+  });
+
+
+  cognitoUser.deleteUser(function (err, result) {
+      if (err) {
+          alert(err);
+          return;
+      }
+      console.log('user delete result: ' + result);
+      window.reload();
+  });
 }

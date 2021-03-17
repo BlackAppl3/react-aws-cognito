@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { createUser, verifyUser } from './Cognito'
+import { createUser, verifyUser, deleteUser } from './Cognito'
 
 class Signup extends Component {
   constructor (props) {
@@ -10,6 +10,7 @@ class Signup extends Component {
     this.changeVerifyCode = this.changeVerifyCode.bind(this)
     this.handleSignupSubmit = this.handleSignupSubmit.bind(this)
     this.handleVerifySubmit = this.handleVerifySubmit.bind(this)
+    this.deleteUser = this.deleteUser.bind(this)
 
     this.state = {
       email: '',
@@ -61,9 +62,15 @@ class Signup extends Component {
     })
   }
 
+  deleteUser(){
+    deleteUser()
+  }
+
   render () {
     return (
       <div className="Signup">
+        <button onClick={this.deleteUser}> Delete my account. </button>
+
         <h2>Sign Up</h2>
         {
           !this.state.showVerification ? (
